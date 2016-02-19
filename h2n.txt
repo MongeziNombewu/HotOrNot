@@ -5,24 +5,21 @@ jpa-setup --provider Hibernate --container WILDFLY;
 jpa-new-entity --named Car --targetPackage org.example.model;
 jpa-new-field --named make;
 jpa-new-field --named model;
-jpa-new-field --named vote --type org.example.model.HotNot;
+jpa-new-field --named vote --type java.lang.Integer;
 
 constraint-add --onProperty make --constraint NotNull;
-constraint-add --onProperty vote --constraint NotNull;
+constraint-add --onProperty vote --constraint Min --value 1;
+constraint-add --onProperty vote --constraint Max --value 10;
 
 jpa-new-entity --named Celebrity --targetPackage org.example.model;
 jpa-new-field --named name;
 jpa-new-field --named surname;
-jpa-new-field --named vote --type org.example.model.HotNot;
+jpa-new-field --named vote --type java.lang.Integer;
 
 constraint-add --onProperty name --constraint NotNull;
 constraint-add --onProperty surname --constraint NotNull;
-constraint-add --onProperty vote --constraint NotNull;
-
-java-new-enum --named HotNot --targetPackage org.example.model;
-java-new-enum-const HOT;
-java-new-enum-const UGH;
-java-new-enum-const UNKNOWN;
+constraint-add --onProperty vote --constraint Min --value 1;
+constraint-add --onProperty vote --constraint Max --value 10;
 
 cd ..;
 
