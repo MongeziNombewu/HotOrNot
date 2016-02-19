@@ -1,0 +1,36 @@
+project-new --named h2n --topLevelPackage org.example --type war --finalName h2n;
+
+jpa-setup --provider Hibernate --container WILDFLY;
+
+jpa-new-entity --named Car --targetPackage org.example.model;
+jpa-new-field --named make;
+jpa-new-field --named model;
+jpa-new-field --named vote --type org.example.model.HotNot;
+
+constraint-add --onProperty make --constraint NotNull;
+constraint-add --onProperty vote --constraint NotNull;
+
+jpa-new-entity --named Celebrity --targetPackage org.example.model;
+jpa-new-field --named name;
+jpa-new-field --named surname;
+jpa-new-field --named vote --type org.example.model.HotNot;
+
+constraint-add --onProperty name --constraint NotNull;
+constraint-add --onProperty surname --constraint NotNull;
+constraint-add --onProperty vote --constraint NotNull;
+
+java-new-enum --named HotNot --targetPackage org.example.model;
+java-new-enum-const HOT;
+java-new-enum-const UGH;
+java-new-enum-const UNKNOWN;
+
+cd ..;
+
+rest-setup;
+rest-generate-endpoints-from-entities --targets org.example.model.*;
+
+scaffold-setup --provider AngularJS ;
+scaffold-generate --provider AngularJS --targets org.example.model.*;
+cd ~~;
+
+build;
